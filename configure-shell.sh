@@ -1,3 +1,4 @@
+#!/bin/bash
 # Add uv shell completion and ensure ~/.local/bin is in PATH
 if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc

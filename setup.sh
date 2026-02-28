@@ -35,13 +35,15 @@ ln -sf ~/.local/share/uv/global/bin/ruff ~/.local/bin/ruff
 ln -sf ~/.local/share/uv/global/bin/python ~/.local/bin/python
 ln -sf ~/.local/share/uv/global/bin/python ~/.local/bin/python3
 
-# Create vim -> neovim alias
-echo "alias vim=nvim" >> ~/.zshrc
+# Create vim -> neovim alias (idempotent)
+if ! grep -q 'alias vim=nvim' ~/.zshrc; then
+    echo 'alias vim=nvim' >> ~/.zshrc
+fi
 
 echo "Manual step: run `configure-shell.sh` to setup aliases and starship"
 
 echo "🌐 Setting up Firefox with Betterfox..."
-echo ".. https://github.com/yokoffing/Betterfox" 
+echo ".. https://github.com/yokoffing/Betterfox"
 echo "📝 Manual step: After Firefox first run, install Betterfox:"
 echo "   1. Start Firefox to create profile"
 echo "   2. Download: curl -o ~/Downloads/user.js https://raw.githubusercontent.com/yokoffing/Betterfox/main/user.js"
@@ -58,7 +60,7 @@ if [ ! -d ~/.config/tmux/plugins/tpm ]; then
     echo "📦 Installing Tmux Plugin Manager..."
     mkdir -p ~/.config/tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-    
+
     # Create backward compatibility symlinks
     mkdir -p ~/.tmux/plugins
     ln -sf ~/.config/tmux/plugins/tpm ~/.tmux/plugins/tpm
@@ -187,29 +189,23 @@ echo "📝 Setting up Neovim configuration..."
 # Create neovim config directory
 mkdir -p ~/.config/nvim
 
-# Install vim-plug if not already installed
-if [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" ]; then
-    echo "📦 Installing vim-plug..."
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-fi
-
 # Copy neovim configuration
-cp init.vim ~/.config/nvim/init.vim
+mkdir -p ~/.config/nvim/lua
+cp init.lua ~/.config/nvim/init.lua
+cp plugins.lua ~/.config/nvim/lua/plugins.lua
 
-# Install additional Python tools for neovim (ruff already installed, just add mypy)
+# Install additional Python tools for neovim
 echo "📦 Installing Python tools for IDE support..."
-uv pip install --python ~/.local/share/uv/global/bin/python mypy
+uv pip install --python ~/.local/share/uv/global/bin/python mypy basedpyright
 
 echo "📝 Installing neovim plugins..."
-# Install vim-plug plugins automatically
-nvim --headless +PlugInstall +qall
+nvim --headless "+Lazy! sync" +qa
 
 echo "✅ Neovim configuration complete!"
 echo "📝 To manually manage plugins later:"
-echo "   :PlugInstall - Install new plugins"
-echo "   :PlugUpdate  - Update all plugins"
-echo "   :PlugClean   - Remove unused plugins"
+echo "   :Lazy       - Open plugin manager"
+echo "   :Lazy sync  - Install and update plugins"
+echo "   :Lazy clean - Remove unused plugins"
 
 echo "✅ Setup complete!"
 echo ""

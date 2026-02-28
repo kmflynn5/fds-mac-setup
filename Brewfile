@@ -7,11 +7,13 @@ brew "uv"                # Fast Python package management
 brew "git"               # Version control
 brew "gh"                # GitHub CLI
 brew "neovim"            # Text editor
+brew "lua"               # Lua runtime (luac for config syntax checking)
 brew "tmux"              # Terminal multiplexer
 
 # Xcode development
+# NOTE: Install Xcode CLI tools manually BEFORE running this Brewfile:
+#   xcode-select --install
 mas "Xcode", id: 497799835
-cask "xcode-command-line-tools"
 brew "swiftlint"         # Swift code linting tool
 # Note: After installation, run: sudo xcodebuild -license accept
 

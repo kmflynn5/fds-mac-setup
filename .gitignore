@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+*.env
+!.env.example
+*.swp
+*~
+__pycache__/
+*.pyc
+.venv/
+node_modules/
