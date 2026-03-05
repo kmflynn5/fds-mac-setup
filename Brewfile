@@ -23,6 +23,8 @@ brew "npm"               # Node package manager
 brew "oven-sh/bun/bun"   # Fast JavaScript runtime and package manager
 
 # Cloud deployment tools
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"  # Infrastructure as code CLI
 brew "cloudflared"       # Cloudflare Tunnel client
 brew "flyctl"            # Fly.io CLI for app deployment
 brew "cloudflare-wrangler"  # Cloudflare Workers CLI
