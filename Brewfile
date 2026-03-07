@@ -45,6 +45,7 @@ brew "tectonic"          # typesetting docs using TeX & LaTeX
 brew "poppler"           # PDF rendering library
 brew "duckdb"            # Fast in-process database system
 brew "pandoc"            # Universal document converter
+brew "d2"                # Diagram scripting language
 
 # Terminal improvements
 brew "zsh-autosuggestions"
