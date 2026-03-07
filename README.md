@@ -70,6 +70,7 @@ Plugin management: `:Lazy` / `:Lazy sync` / `:Lazy clean`
 - **Ghostty** terminal
 - **Starship** prompt
 - **Aerospace** tiling window manager
+- **Karabiner-Elements** keyboard remapping (see below)
 
 ### CLI Tools
 - `ripgrep`, `fd`, `bat`, `eza`, `jq`, `yq`, `tree`, `htop`
@@ -99,6 +100,39 @@ jl
 # New tmux session
 tmux new-session -s my-project
 ```
+
+## Keyboard Configuration (65% keyboards)
+
+On 60%/65% keyboards (e.g. Keychron K6), the top-left key sends `ESC` instead of backtick/grave. This means `Shift+ESC` produces an escape sequence rather than `~`, breaking `cd ~/` and any path using tilde.
+
+Karabiner-Elements is included to fix this. After installing and granting Input Monitoring permissions, add the following to `~/.config/karabiner/karabiner.json` under your profile:
+
+```json
+"complex_modifications": {
+    "rules": [
+        {
+            "description": "Shift+Escape to Tilde (65% keyboard)",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "escape",
+                        "modifiers": { "mandatory": ["shift"] }
+                    },
+                    "to": [
+                        {
+                            "key_code": "grave_accent_and_tilde",
+                            "modifiers": ["shift"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+This maps `Shift+ESC` → `~` while leaving `ESC` alone.
 
 ## Firefox
 
