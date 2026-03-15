@@ -44,6 +44,7 @@ brew "coreutils"         # Adds utils like gtimeout
 brew "tectonic"          # typesetting docs using TeX & LaTeX
 brew "poppler"           # PDF rendering library
 brew "duckdb"            # Fast in-process database system
+brew "ffmpeg"            # Audio/video processing
 brew "pandoc"            # Universal document converter
 brew "d2"                # Diagram scripting language
 
