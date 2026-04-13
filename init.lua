@@ -37,6 +37,8 @@ key.set("n", "<C-h>", "<C-w>h")
 key.set("n", "<C-j>", "<C-w>j")
 key.set("n", "<C-k>", "<C-w>k")
 key.set("n", "<C-l>", "<C-w>l")
+key.set({ "x", "s" }, "<C-c>", '"+y', { noremap = true, desc = "Copy selection to clipboard without cutting" })
+key.set({ "x", "s" }, "<D-c>", '"+y', { noremap = true, desc = "Copy selection to clipboard without cutting (Cmd+C)" })
 
 -- ~~~~~~~~~~~~~~ PLUGIN SETUP (LAZY.NVIM) ~~~~~~~~~~~~~~
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
