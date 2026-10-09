@@ -106,7 +106,7 @@ alias cat="bat --paging=never"
 # Use "command cat" or "\cat" for original cat when needed
 
 # Project management
-alias newproject="mkdir \$1 && cd \$1 && uv init"
+newproject() { uv init "$1" && cd "$1"; }  # function, not alias: aliases can't take args
 alias activate-env="source .venv/bin/activate"
 EOF
 fi
