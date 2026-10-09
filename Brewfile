@@ -9,6 +9,7 @@ brew "gh"                # GitHub CLI
 brew "neovim"            # Text editor
 brew "lua"               # Lua runtime (luac for config syntax checking)
 brew "tmux"              # Terminal multiplexer
+brew "tmux-fingers"      # Prefix + F copy hints (replaces tmux-thumbs, no Rust build)
 
 # Xcode development
 # NOTE: Install Xcode CLI tools manually BEFORE running this Brewfile:
@@ -38,6 +39,7 @@ brew "yq"                # YAML processor
 brew "curl"              # HTTP client
 brew "wget"              # File downloader
 brew "ripgrep"           # Fast text search
+brew "fzf"               # Fuzzy finder (required by tmux-fzf)
 brew "fd"                # Fast file find
 brew "bat"               # Better cat with syntax highlighting
 brew "eza"               # Better ls with colors
@@ -66,6 +68,8 @@ cask "firefox"           # Fast, privacy-focused browser (pair with Betterfox)
 # Optional productivity apps
 cask "raycast"           # Spotlight replacement (optional)
 cask "bitwarden"         # Password manager (optional)
+# Zoho Mail: cask "zoho-mail" is disabled (fails Gatekeeper). Install manually:
+#   https://www.zoho.com/mail/desktop/
 
 # Family/Personal apps
 cask "vlc"               # Media player for family videos

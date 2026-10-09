@@ -152,7 +152,6 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin 'fcsonline/tmux-thumbs'
 
 # Beautiful status bar
 set -g @plugin 'wfxr/tmux-power'
@@ -161,8 +160,9 @@ set -g @tmux_power_theme 'sky'
 # Plugin configurations
 set -g @continuum-restore 'on'
 set -g @continuum-save-interval '15'
-set -g @tmux-fzf-launch-key 'C-f'
-set -g @thumbs-key F
+TMUX_FZF_LAUNCH_KEY="C-f"  # tmux-fzf reads this env var, not a @option
+# tmux-fingers (brew): Prefix + F for vimium-style copy hints
+run 'tmux-fingers load-config'
 
 # Resurrect settings for data science tools
 set -g @resurrect-capture-pane-contents 'on'
