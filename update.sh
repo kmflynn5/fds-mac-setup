@@ -15,7 +15,7 @@ echo "📦 Updating Node.js packages..."
 npm update -g
 
 echo "📱 Updating Mac App Store apps..."
-mas upgrade
+sudo mas upgrade  # mas 7+ requires root
 
 echo "🧹 Cleaning up..."
 brew cleanup

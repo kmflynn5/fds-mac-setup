@@ -13,14 +13,15 @@ brew "tmux"              # Terminal multiplexer
 # Xcode development
 # NOTE: Install Xcode CLI tools manually BEFORE running this Brewfile:
 #   xcode-select --install
-mas "Xcode", id: 497799835
+# mas 7+ requires root for installs, which hangs `brew bundle`. Install Xcode manually:
+#   sudo mas install 497799835   (or via the App Store app)
 brew "swiftlint"         # Swift code linting tool
 # Note: After installation, run: sudo xcodebuild -license accept
 
 # Node.js for Claude Code
 brew "node"              # Node.js runtime
 brew "npm"               # Node package manager
-brew "oven-sh/bun/bun"   # Fast JavaScript runtime and package manager
+brew "bun"               # Fast JavaScript runtime and package manager
 
 # Cloud deployment tools
 tap "hashicorp/tap"
@@ -68,7 +69,7 @@ cask "bitwarden"         # Password manager (optional)
 
 # Family/Personal apps
 cask "vlc"               # Media player for family videos
-cask "zoom"              # Video calls with family
+cask "zoom" unless File.exist?("/Applications/zoom.us.app")  # Video calls (skip if MDM-installed)
 
 # Mac App Store CLI
 brew "mas"

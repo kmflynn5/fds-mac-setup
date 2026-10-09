@@ -17,7 +17,8 @@ xcode-select --install
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# 4. Sign in to the Mac App Store (needed for Xcode via mas)
+# 4. (Optional) Install full Xcode from the App Store, or: sudo mas install 497799835
+#    mas 7+ needs root, so Xcode is not in the Brewfile
 ```
 
 ## Quick Setup
@@ -26,8 +27,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 git clone <this-repo> fds-mac-setup
 cd fds-mac-setup
 
+# Trust the third-party taps (Homebrew refuses to load untrusted taps)
+brew trust hashicorp/tap nikitabobko/tap
+
 # Install Homebrew packages first. Some casks (docker, karabiner-elements, zoom)
-# prompt for your password, and Xcode is a large App Store download.
+# prompt for your password.
 brew bundle install --file=Brewfile
 
 ./setup.sh            # uv Python + tools, tmux, Neovim (re-runs brew bundle, now a no-op)
