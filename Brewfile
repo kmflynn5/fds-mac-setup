@@ -58,7 +58,7 @@ brew "starship"          # Cross-shell prompt
 cask "ghostty"           # Modern terminal
 cask "nikitabobko/tap/aerospace"
 cask "karabiner-elements"  # Keyboard remapping (Shift+ESC → tilde for 65% keyboards)
-cask "docker"            # Containerization
+cask "docker-desktop"    # Containerization
 
 # Browser
 cask "firefox"           # Fast, privacy-focused browser (pair with Betterfox)

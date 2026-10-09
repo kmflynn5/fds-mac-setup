@@ -4,6 +4,11 @@ if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 fi
 
+# Enable zsh completion system (required before any compdef-based completions)
+if ! grep -q 'compinit' ~/.zshrc; then
+    echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+fi
+
 # uv / uvx shell completion
 if ! grep -q 'uv generate-shell-completion zsh' ~/.zshrc; then
     echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
@@ -106,8 +111,17 @@ alias activate-env="source .venv/bin/activate"
 EOF
 fi
 
-# Reload shell
-source ~/.zshrc
+# zsh plugins from Homebrew (syntax-highlighting must be sourced last)
+if ! grep -q 'zsh-autosuggestions.zsh' ~/.zshrc; then
+    cat >> ~/.zshrc << 'EOF'
+
+# zsh plugins (keep at end of file; syntax-highlighting must be last)
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+EOF
+fi
+
+# Note: this is a bash script, so it can't reload zsh config; restart your terminal instead
 
 # Test installations
 uv --version
