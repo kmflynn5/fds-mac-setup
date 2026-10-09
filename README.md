@@ -10,8 +10,14 @@ Before running setup:
 # 1. Install Xcode CLI tools
 xcode-select --install
 
-# 2. Install Homebrew
+# 2. Install Homebrew (one-time; prompts for your admin password)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 3. Add brew to your PATH
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 4. Sign in to the Mac App Store (needed for Xcode via mas)
 ```
 
 ## Quick Setup
@@ -19,11 +25,18 @@ xcode-select --install
 ```bash
 git clone <this-repo> fds-mac-setup
 cd fds-mac-setup
-./setup.sh
-./configure-shell.sh
+
+# Install Homebrew packages first. Some casks (docker, karabiner-elements, zoom)
+# prompt for your password, and Xcode is a large App Store download.
+brew bundle install --file=Brewfile
+
+./setup.sh            # uv Python + tools, tmux, Neovim (re-runs brew bundle, now a no-op)
+./configure-shell.sh  # PATH, completions, Starship, aliases
 ```
 
 Then restart your terminal.
+
+After the initial Homebrew install, `brew install` never needs sudo; only `.pkg`-based casks ask for a password.
 
 ## What's Included
 

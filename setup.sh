@@ -56,8 +56,10 @@ echo "   4. Restart Firefox"
 echo "   5. Install Adblocker (uBlock Origin) and setup filters"
 
 echo "🖥️ Setting up terminal environment..."
-# Install Claude Code CLI
-npm install -g @anthropic-ai/claude-code
+# Install Claude Code (native installer; self-updates)
+if ! command -v claude &> /dev/null && [ ! -x ~/.local/bin/claude ]; then
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
 
 # Install Tmux Plugin Manager
 if [ ! -d ~/.config/tmux/plugins/tpm ]; then
