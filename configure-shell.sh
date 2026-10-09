@@ -4,6 +4,12 @@ if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 fi
 
+# uv / uvx shell completion
+if ! grep -q 'uv generate-shell-completion zsh' ~/.zshrc; then
+    echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+    echo 'eval "$(uvx --generate-shell-completion zsh)"' >> ~/.zshrc
+fi
+
 # Configure Starship prompt
 if ! grep -q 'eval "$(starship init zsh)"' ~/.zshrc; then
     echo 'eval "$(starship init zsh)"' >> ~/.zshrc

@@ -6,13 +6,10 @@ brew update
 brew upgrade
 brew bundle install --file=Brewfile  # Install any new packages
 
-echo "🐍 Updating Python tools..."
-~/.local/share/uv/global/bin/uv pip install --upgrade \
-    requests duckdb pytest ruff
-
-# ~/.local/share/uv/global/bin/uv pip install --upgrade \
-#     jupyter jupyterlab pandas numpy matplotlib seaborn \
-#     scikit-learn click rich typer polars
+echo "🐍 Updating Python and uv tools..."
+uv python upgrade      # latest patch release of each managed Python
+uv tool upgrade --all  # ruff, mypy, basedpyright, ...
+uv cache prune
 
 echo "📦 Updating Node.js packages..."
 npm update -g

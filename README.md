@@ -29,8 +29,10 @@ Then restart your terminal.
 
 ### Python
 - **uv** — fast package and project management (replaces pip, virtualenv, pyenv)
-- Global Python 3.11 environment at `~/.local/share/uv/global`
-- `ruff`, `mypy`, `basedpyright`, `pytest`, `duckdb`, `requests` pre-installed globally
+- Python 3.11 installed via `uv python install --default` (`python`/`python3` in `~/.local/bin`)
+- `ruff`, `mypy`, `basedpyright` installed as isolated CLI tools via `uv tool install`
+- Libraries (`pytest`, `duckdb`, `pandas`, ...) are added per-project with `uv add`
+- Global uv config (`uv.toml` → `~/.config/uv/uv.toml`) uses only uv-managed Pythons
 
 ### Neovim (lazy.nvim)
 - **gruvbox** colorscheme + **lualine** status bar

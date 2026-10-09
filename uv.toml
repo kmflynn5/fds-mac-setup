@@ -1,0 +1,4 @@
+# Global uv config — installed to ~/.config/uv/uv.toml by setup.sh
+
+# Only use uv-managed Pythons; never pick up Homebrew's python pulled in as a dependency
+python-preference = "only-managed"

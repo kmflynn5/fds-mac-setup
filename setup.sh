@@ -13,34 +13,38 @@ fi
 echo "🍺 Installing Homebrew packages..."
 brew bundle install --file=Brewfile
 
-echo "🐍 Setting up Python environments..."
-# Create global uv environment with Python 3.11
-uv venv ~/.local/share/uv/global --python 3.11
+echo "🐍 Setting up Python with uv..."
+# Global uv config: only use uv-managed Pythons (ignore Homebrew/system python)
+mkdir -p ~/.config/uv
+cp uv.toml ~/.config/uv/uv.toml
 
-echo "📦 Installing global Python tools with uv..."
-# Install data science tools using system uv, not the venv one
-uv pip install --python ~/.local/share/uv/global/bin/python \
-    requests duckdb pytest ruff
-
-# TODO: install DS extras?
-# uv pip install --python ~/.local/share/uv/global/bin/python \
-#     jupyter jupyterlab pandas numpy matplotlib seaborn \
-#     scikit-learn click rich typer polars
-
-# Create symlinks for global access
+# Remove symlinks left over from the old global-venv setup so uv can own these names
 mkdir -p ~/.local/bin
-# ln -sf ~/.local/share/uv/global/bin/jupyter ~/.local/bin/jupyter
-# ln -sf ~/.local/share/uv/global/bin/jupyter-lab ~/.local/bin/jupyter-lab
-ln -sf ~/.local/share/uv/global/bin/ruff ~/.local/bin/ruff
-ln -sf ~/.local/share/uv/global/bin/python ~/.local/bin/python
-ln -sf ~/.local/share/uv/global/bin/python ~/.local/bin/python3
+for exe in python python3 ruff; do
+    if [ -L ~/.local/bin/$exe ] && [[ "$(readlink ~/.local/bin/$exe)" == *uv/global* ]]; then
+        rm ~/.local/bin/$exe
+    fi
+done
+
+# Install Python 3.11 and expose python/python3 in ~/.local/bin (--default is experimental)
+uv python install 3.11 --default
+
+echo "📦 Installing Python CLI tools with uv tool..."
+# Each tool gets its own isolated environment; executables land in ~/.local/bin
+# Libraries (pytest, duckdb, requests, pandas...) belong per-project: uv add <pkg>
+for tool in ruff mypy basedpyright; do
+    uv tool install "$tool"
+done
+
+# TODO: global Jupyter? (or per-project via the `jl` alias)
+# uv tool install jupyterlab
 
 # Create vim -> neovim alias (idempotent)
 if ! grep -q 'alias vim=nvim' ~/.zshrc; then
     echo 'alias vim=nvim' >> ~/.zshrc
 fi
 
-echo "Manual step: run `configure-shell.sh` to setup aliases and starship"
+echo "Manual step: run ./configure-shell.sh to setup aliases and starship"
 
 echo "🌐 Setting up Firefox with Betterfox..."
 echo ".. https://github.com/yokoffing/Betterfox"
@@ -193,10 +197,6 @@ mkdir -p ~/.config/nvim
 mkdir -p ~/.config/nvim/lua
 cp init.lua ~/.config/nvim/init.lua
 cp plugins.lua ~/.config/nvim/lua/plugins.lua
-
-# Install additional Python tools for neovim
-echo "📦 Installing Python tools for IDE support..."
-uv pip install --python ~/.local/share/uv/global/bin/python mypy basedpyright
 
 echo "📝 Installing neovim plugins..."
 nvim --headless "+Lazy! sync" +qa
